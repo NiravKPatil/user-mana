@@ -1,0 +1,12 @@
+﻿<mat-toolbar color="primary" *ngIf="user">
+    <mat-toolbar-row>
+        <a class="nav-item nav-link font-color" (click)="home()">Home</a>
+        <a class="nav-item nav-link font-color" (click)="admin()" *ngIf="isAdmin">User List</a>
+        <a class="nav-item nav-link font-color" (click)="userClick()" *ngIf="!isAdmin">My Profile</a>
+        <a class="nav-position nav-link font-color " (click)="logout()">Logout</a>
+    </mat-toolbar-row>
+  </mat-toolbar>
+
+<div class="container">
+    <router-outlet></router-outlet>
+</div>

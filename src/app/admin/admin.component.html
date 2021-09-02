@@ -1,0 +1,72 @@
+﻿<mat-card class="box" *ngIf="!isUserEdit">
+    <div class="button">
+        <button mat-raised-button color="primary" (click)="editUser()">Add</button>
+    </div>
+    <div>
+        <h2>User Details</h2>
+    </div>
+    <table class="table mat-elevation-z8">
+        <thead>
+            <tr>
+                <th class="table-border">User Name</th>
+                <th class="table-border">First Name</th>
+                <th class="table-border">Last Name</th>
+                <th class="table-border">Roles</th>
+                <th class="table-border">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let user of users">
+                <td class="table-data">{{user?.username}}</td>
+                <td class="table-data">{{user?.firstName}}</td>
+                <td class="table-data">{{user?.lastName}}</td>
+                <td class="table-data">{{user?.role}}</td>
+                <td class="table-data example-button-row">
+                    <button mat-raised-button color="primary" class="px10" (click)="editUser(user.username)">Edit</button>
+                    <button mat-raised-button color="warn" (click)="deleteUser(user.username)">Delete</button></td>
+            </tr>
+        </tbody>
+    </table>
+</mat-card>
+<div *ngIf="isUserEdit">
+<mat-card class="box">
+    <h2>{{ !updateUser ? "Add User" : "Edit User" }}</h2>
+</mat-card>
+<mat-card class="box">
+    <form class="example-form" [formGroup]="addUserFrom">
+        <mat-error *ngIf="messageBoolean">
+            {{message}}
+        </mat-error>
+        <mat-error *ngIf="addUserFrom.controls.username.hasError('email') && !addUserFrom.controls.username.hasError('required')">
+            Please enter a valid email address
+        </mat-error>
+        <mat-form-field appearance="fill" class="inout-width">
+            <mat-label>User Name</mat-label>
+            <input matInput formControlName="username" [errorStateMatcher]="matcher" [readonly]="updateUser === true">
+        </mat-form-field>
+        <mat-form-field appearance="fill" class="inout-width">
+            <mat-label>Password</mat-label>
+            <input matInput type="password" formControlName="password" [errorStateMatcher]="matcher">
+        </mat-form-field>
+        <mat-form-field appearance="fill" class="inout-width">
+            <mat-label>First Name</mat-label>
+            <input matInput formControlName="firstName" [errorStateMatcher]="matcher">
+        </mat-form-field>
+        <mat-form-field appearance="fill" class="inout-width">
+            <mat-label>Last Name</mat-label>
+            <input matInput formControlName="lastName" [errorStateMatcher]="matcher">
+        </mat-form-field>
+        <mat-form-field appearance="fill" class="inout-width">
+            <mat-label>Select</mat-label>
+            <mat-select formControlName="role" [errorStateMatcher]="matcher">
+              <mat-option value="Admin">Admin</mat-option>
+              <mat-option value="User">User</mat-option>
+            </mat-select>
+          </mat-form-field>
+    </form>
+</mat-card>
+<mat-card class="box">
+    <button mat-stroked-button color="primary" class="px10" [disabled]="!addUserFrom.valid" (click)="save()">{{ updateUser ? "Edit" : "Save" }}</button>
+    <button mat-stroked-button color="warn" (click)="cancel()">Cancel</button>
+</mat-card>
+</div>

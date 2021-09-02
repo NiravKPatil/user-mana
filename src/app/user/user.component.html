@@ -1,0 +1,35 @@
+<mat-card class="box">
+    <h2>{{ isEditable ? "Edit Profile" :  "My Profile" }}</h2>
+</mat-card>
+<mat-card class="box" *ngIf="!isEditable">
+    <div class="space">
+        <label>User Name</label> : <br> <label>{{users.username}}</label>
+    </div>
+    <div class="space">
+        <label>First name</label> : <br> <label>{{users.firstName}}</label>
+    </div>
+    <div class="space">
+        <label>Last Name</label> : <br> <label>{{users.lastName}}</label>
+    </div>
+</mat-card>
+
+<mat-card class="box" *ngIf="isEditable">
+    <form class="example-form" [formGroup]="userEditForm">
+        <mat-form-field appearance="fill" class="inout-width">
+            <mat-label>User Name</mat-label>
+            <input matInput formControlName="username" [readonly]="true">
+        </mat-form-field>
+        <mat-form-field appearance="fill" class="inout-width">
+            <mat-label>First Name</mat-label>
+            <input matInput formControlName="firstName" [errorStateMatcher]="matcher">
+        </mat-form-field>
+        <mat-form-field appearance="fill" class="inout-width">
+            <mat-label>Last Name</mat-label>
+            <input matInput formControlName="lastName" [errorStateMatcher]="matcher">
+        </mat-form-field>
+    </form>
+</mat-card>
+<mat-card class="box">
+    <button mat-flat-button color="primary" (click)="save()">{{ !isEditable ? "Edit" : "save" }}</button>
+    <button mat-stroked-button color="warn" *ngIf="isEditable" (click)="cancel()">Cancel</button>
+</mat-card>
