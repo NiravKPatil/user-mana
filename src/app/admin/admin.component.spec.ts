@@ -38,6 +38,10 @@ describe('AdminComponent', () => {
     describe('Admin Component Start', () => {
         it(`should call 'ngOnInint' when User Login`, () => {
             const user = jest.spyOn(component, 'ngOnInit');
+            const service = userServiceMock.getAll().
+            pipe(first()).subscribe((data) => {
+                expect(data).toEqual(users);
+            });
             component.ngOnInit();
             expect(user).toHaveBeenCalled();
         });
